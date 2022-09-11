@@ -1,1 +1,2 @@
-# twrp_device_motorola_milanf
+# Recovery Device Trees
+# Motorola Moto G Stylus 5G 2022
