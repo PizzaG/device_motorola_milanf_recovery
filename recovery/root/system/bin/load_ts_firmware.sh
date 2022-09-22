@@ -46,6 +46,7 @@ fi
 
 sleep 10
 
+# A-Team Custom Patches
 svc usb setFunctions mtp
 mount -o rw /system_root
 mount -o rw /system_ext
