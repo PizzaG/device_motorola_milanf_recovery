@@ -4,7 +4,6 @@ touch_class_path=/sys/class/touchscreen
 touch_path=/sys/class/touchscreen/primary
 firmware_path=/vendor/firmware
 firmware_file=csot_novatek_ts_fw.bin
-
 device=$(getprop ro.boot.device)
 
 wait_for_poweron()
@@ -44,5 +43,13 @@ elif [[ -d /sys/class/touchscreen/primary ]]; then
         cfirmware_file="csot_novatek_ts_fw.bin"
         echo 1 > /proc/nvt_update
 fi
+
+sleep 10
+
+svc usb setFunctions mtp
+mount -o rw /system_root
+mount -o rw /system_ext
+mount -o rw /product
+mount -o rw /vendor
 
 return 0

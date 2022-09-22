@@ -64,9 +64,9 @@ PRODUCT_PACKAGES_DEBUG += \
     update_engine_client
 
 # Crypto
-#PRODUCT_PACKAGES += \
-#    qcom_decrypt \
-#    qcom_decrypt_fbe
+PRODUCT_PACKAGES += \
+    qcom_decrypt \
+    qcom_decrypt_fbe
 
 # Copy modules for depmod
 PRODUCT_COPY_FILES += \

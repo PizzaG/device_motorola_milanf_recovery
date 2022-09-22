@@ -26,6 +26,9 @@ TARGET_USES_64_BIT_BINDER := true
 DEXPREOPT_GENERATE_APEX_IMAGE := true
 BUILD_BROKEN_DUP_RULES := true
 
+# Bootloader
+TARGET_USES_UEFI := true
+
 # Assert
 TARGET_OTA_ASSERT_DEVICE := milanf
 
@@ -34,7 +37,7 @@ BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 
 # Build Flags
 TW_MAINTAINER := PizzaG
-TW_DEVICE_VERSION := v0.03
+TW_DEVICE_VERSION := v0.04
 RECOVERY_VARIANT := TWRP_12.1
 ALLOW_MISSING_DEPENDENCIES := true
 LC_ALL := "C"
@@ -58,21 +61,29 @@ BOARD_KERNEL_PAGESIZE := 4096
 BOARD_BOOT_HEADER_VERSION := 3
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 
+BOARD_KERNEL_CMDLINE += twrpfastboot=1
 BOARD_KERNEL_CMDLINE += androidboot.console=ttyMSM0
 BOARD_KERNEL_CMDLINE += androidboot.hardware=qcom
+BOARD_KERNEL_CMDLINE += androidboot.hab.cid=50
+BOARD_KERNEL_CMDLINE += androidboot.hab.csv=5
+BOARD_KERNEL_CMDLINE += androidboot.hab.product=milanf
 BOARD_KERNEL_CMDLINE += androidboot.memcg=1
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
-BOARD_KERNEL_CMDLINE += androidboot.usbcontroller=a600000.dwc3
+BOARD_KERNEL_CMDLINE += androidboot.usbcontroller=4e00000.dwc3
+BOARD_KERNEL_CMDLINE += buildvariant=eng
 BOARD_KERNEL_CMDLINE += cgroup.memory=nokmem,nosocket
 BOARD_KERNEL_CMDLINE += console=ttyMSM0,115200n8
-BOARD_KERNEL_CMDLINE += earlycon=msm_geni_serial,0x880000
+BOARD_KERNEL_CMDLINE += earlycon=msm_geni_serial,0x04C8C000
+BOARD_KERNEL_CMDLINE += firmware_class.path=/vendor/firmware_mnt/image 
 BOARD_KERNEL_CMDLINE += ip6table_raw.raw_before_defrag=1
 BOARD_KERNEL_CMDLINE += iptable_raw.raw_before_defrag=1
+BOARD_KERNEL_CMDLINE += loop.max_part=7
 BOARD_KERNEL_CMDLINE += lpm_levels.sleep_disabled=1
 BOARD_KERNEL_CMDLINE += msm_rtb.filter=0x237
 BOARD_KERNEL_CMDLINE += pcie_ports=compat
 BOARD_KERNEL_CMDLINE += service_locator.enable=1
 BOARD_KERNEL_CMDLINE += swiotlb=0
+BOARD_KERNEL_CMDLINE += video=vfb:640x400,bpp=32,memsize=3072000
 
 KERNEL_LD := LLVM=1
 TARGET_KERNEL_ADDITIONAL_FLAGS := DTC_EXT=$(shell pwd)/prebuilts/misc/linux-x86/dtc/dtc
@@ -87,15 +98,20 @@ TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image.gz-dtb
 #BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 #BOARD_KERNEL_SEPARATED_DTBO := true
 
-# Crypto
-#TW_INCLUDE_CRYPTO := true
-#TW_INCLUDE_CRYPTO_FBE := true
-#TW_INCLUDE_FBE_METADATA_DECRYPT := true
+# Metadata
+BOARD_USES_METADATA_PARTITION := true
+BOARD_ROOT_EXTRA_FOLDERS += metadata
+
 PLATFORM_SECURITY_PATCH := 2099-12-31
 VENDOR_SECURITY_PATCH := 2099-12-31
 PLATFORM_VERSION := 16.1.0
-#BOARD_USES_QCOM_FBE_DECRYPTION := true
-#BOARD_USES_METADATA_PARTITION := true
+PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
+
+BOARD_USES_QCOM_FBE_DECRYPTION := true
+TW_INCLUDE_CRYPTO := true
+TW_INCLUDE_CRYPTO_FBE := true
+TW_INCLUDE_FBE_METADATA_DECRYPT := true
+TW_USE_FSCRYPT_POLICY := 1
 
 TARGET_RECOVERY_DEVICE_MODULES += \
     libandroidicu \
@@ -108,7 +124,7 @@ PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/recovery/root/system/lib64/libandroidicu.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/libandroidicu.so
 
 # Partitions
-BOARD_FLASH_BLOCK_SIZE := 131072
+BOARD_FLASH_BLOCK_SIZE := 262144
 BOARD_BOOTIMAGE_PARTITION_SIZE := 100663296
 BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 100663296
 

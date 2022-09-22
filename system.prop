@@ -17,7 +17,7 @@ ro.system.product.cpu.abilist64=arm64-v8a
 #ro.system.build.tags=release-keys
 #ro.system.build.type=user
 #ro.system.build.version.incremental=aacc77
-ro.system.build.version.release=12
+#ro.system.build.version.release=12
 #ro.system.build.version.release_or_codename=12
 #ro.system.build.version.sdk=31
 ####################################
@@ -38,7 +38,7 @@ ro.build.version.preview_sdk=0
 ro.build.version.preview_sdk_fingerprint=REL
 ro.build.version.codename=REL
 ro.build.version.all_codenames=REL
-ro.build.version.release=12
+#ro.build.version.release=12
 #ro.build.version.release_or_codename=12
 #ro.build.version.security_patch=2022-03-01
 ro.build.version.min_supported_target_sdk=23
